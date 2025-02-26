@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border = "1">
+        <tr>
+            <th>S.No</th>
+            <th>id</th>
+            <th>name</th>
+            <th>e-mail</th>
+        </tr>
+        <% for(let i = 0;i<arr.length;i++) { %>
+            <tr>
+                <td><%= i+1 %></td>
+                <td><%= arr[i].id %></td>
+                <td><%= arr[i].name %></td>
+                <td><%= arr[i].email %></td>
+            </tr>
+        <% } %>            
+    </table>
+</body>
+</html>

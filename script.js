@@ -1,7 +1,9 @@
 import { faker } from "@faker-js/faker";
+import methodOverride from "method-override";
 import mysql from "mysql2/promise";
 import express, { urlencoded } from "express";
 const app = express();
+app.use(methodOverride("_method"));
 app.set("view engine","ejs");
 app.use(express.urlencoded({extended : true}));
 app.use(express.json())
@@ -71,6 +73,27 @@ try {
             console.log(err);
         }
     })
+    app.get('/show/:id/edit',async(req,res)=>{
+        try{
+            let {id} = req.params;
+            let s = "";
+            for(let i = 0;i<id.length;i++){
+                if(id[i] == ' ')continue;
+                else s+=id[i];
+            }
+            let [result] = await connection.query(`SELECT * FROM user WHERE id = ?`,[s]);
+            console.log(result);
+            res.render("edit",{data : result[0]});
+        } catch(err) {
+            console.log(err);
+        }
+    });
+    app.patch('/show',async(req,res)=>{
+        let arr = [req.body.name , req.body.email , req.body.id];
+        await connection.query(`UPDATE user SET name = ? , email = ? WHERE id = ?`,[arr[0],arr[1],arr[2]])
+        let [result] = await connection.query(`SELECT * FROM user`);
+        res.render("show",{arr : result});
+    });
 } catch (err) {
   console.log(err);
 }

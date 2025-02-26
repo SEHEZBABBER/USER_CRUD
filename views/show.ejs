@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .back{
+            margin: 30px;
+        }
+    </style>
 </head>
 <body>
     <table border = "1">
@@ -19,9 +24,10 @@
                 <td><%= arr[i].id %></td>
                 <td><%= arr[i].name %></td>
                 <td><%= arr[i].email %></td>
+                <td><button onclick="window.location.href = `http://localhost:8080/show/<%=arr[i].id%> /edit`">Edit Data</button></td>
             </tr>
-        <% } %>            
+        <% } %>    
     </table>
-    <button onclick="window.location.href = `/`">Go Back</button>
+    <button onclick="window.location.href = `/`" class="back">Go Back</button>
 </body>
 </html>

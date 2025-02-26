@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        .form-container textarea,
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-container textarea {
+            resize: vertical;
+            height: 80px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #007BFF;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .form-container button:hover {
+            background: #0056b3;
+        }
+        .red {
+            color: red;
+        }
+        .invisible {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Edit Form</h1>
+        <form action="http://localhost:8080/show?_method=PATCH" method="post">
+            <input type="hidden" name="id" value="<%= data.id %>">
+            <textarea name="name"><%= data.name %></textarea>
+            <input type="text" name="email" id="email" value="<%= data.email %>">
+            <input type="password" name="password" id="password" placeholder="Enter Password">
+            <p id="para" class="invisible">PASSWORDS DON’T MATCH</p>
+            <button>Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // ✅ Pass the password from EJS to JavaScript
+        let correctPassword = "<%= data.password %>";
+
+        let inp = document.getElementById('password');
+        let p = document.getElementById('para');
+
+        inp.addEventListener('input', (e) => {
+            let val = e.target.value;
+            if (val !== correctPassword) {
+                p.classList.remove('invisible');
+                p.classList.add('red');
+            } else {
+                p.classList.add('invisible');
+            }
+        });
+    </script>
+
+</body>
+</html>

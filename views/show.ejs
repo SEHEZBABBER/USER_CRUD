@@ -25,6 +25,7 @@
                 <td><%= arr[i].name %></td>
                 <td><%= arr[i].email %></td>
                 <td><button onclick="window.location.href = `http://localhost:8080/show/<%=arr[i].id%> /edit`">Edit Data</button></td>
+                <td><form action="http://localhost:8080/show/<%=arr[i].id%> /delete?_method=DELETE" method="post"><button>Delete</button></form></td>
             </tr>
         <% } %>    
     </table>

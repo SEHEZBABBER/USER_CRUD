@@ -88,11 +88,25 @@ try {
             console.log(err);
         }
     });
+    app.delete('/show/:id/delete',async(req,res)=>{
+        try{
+            let {id} = req.params;
+            let s = "";
+            for(let i = 0;i<id.length;i++){
+                if(id[i] == ' ')continue;
+                else s+=id[i];
+            }
+            await connection.query(`DELETE FROM USER WHERE id = ?`,[s]);
+            let [result] = await connection.query(`SELECT * FROM user `);
+            res.redirect('/show');
+        } catch(err) {
+            console.log(err);
+        }
+    });
     app.patch('/show',async(req,res)=>{
         let arr = [req.body.name , req.body.email , req.body.id];
         await connection.query(`UPDATE user SET name = ? , email = ? WHERE id = ?`,[arr[0],arr[1],arr[2]])
-        let [result] = await connection.query(`SELECT * FROM user`);
-        res.render("show",{arr : result});
+        res.redirect('/show');
     });
 } catch (err) {
   console.log(err);

@@ -1,8 +1,10 @@
 import { faker } from "@faker-js/faker";
 import mysql from "mysql2/promise";
-import express from "express";
+import express, { urlencoded } from "express";
 const app = express();
 app.set("view engine","ejs");
+app.use(express.urlencoded({extended : true}));
+app.use(express.json())
 async function main() {
 function createRandomUser() {
   return [
@@ -57,6 +59,17 @@ try {
     })
     app.get('/add',async(req,res)=>{
         res.render("add");
+    })
+    app.post('/add',async(req,res)=>{
+        try{
+            let id = faker.string.uuid();
+            let arr = [[id,req.body.name,req.body.email,req.body.password]];
+            await connection.query(`INSERT INTO user (id , name , email , password ) VALUES ?`,[arr]);
+            let [result] = await connection.query(`SELECT * FROM user`);
+            res.render('show',{arr : result});
+        } catch(err){
+            console.log(err);
+        }
     })
 } catch (err) {
   console.log(err);
